@@ -18,4 +18,4 @@ regiondf.dropna(how='all',axis=0, inplace=True)
 #visualise
 regiondf.plot(figsize=(20, 12), y=kw_list, kind ='bar')
 plt.show()
-regiondf.to_excel("pytrends2.xlsx", sheet_name="FTX", index=False)
+regiondf.to_excel("pytrends2.xlsx", sheet_name="Tests", index=False)
