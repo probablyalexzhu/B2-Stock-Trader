@@ -1,5 +1,6 @@
 import pandas as pd                        
 from pytrends.request import TrendReq
+import matplotlib.pyplot as plt
 
 pytrends = TrendReq(hl='en-US', tz=360)
 
@@ -16,5 +17,5 @@ regiondf.dropna(how='all',axis=0, inplace=True)
 
 #visualise
 regiondf.plot(figsize=(20, 12), y=kw_list, kind ='bar')
-
+plt.show()
 regiondf.to_excel("pytrends2.xlsx", sheet_name="FTX", index=False)
