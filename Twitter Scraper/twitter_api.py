@@ -19,7 +19,7 @@ def printtweetdata(n, ith_tweet):
     print(f"Hashtags Used:{ith_tweet[8]}")
 
 # function to perform data extraction
-def scrape(words, date_since, date_to, numtweet):
+def scrape(words, date_since, numtweet):
     # Creating DataFrame using pandas
     db = pd.DataFrame(columns=['username',
                                'description',
@@ -37,7 +37,7 @@ def scrape(words, date_since, date_to, numtweet):
     # restricted using .items(number of tweets)
     tweets = tweepy.Cursor(api.search_tweets,
                            words, lang="en",
-                           since_id=date_since, max_id=date_to,
+                           since_id=date_since,
                            tweet_mode='extended').items(numtweet)
 
     # .Cursor() returns an iterable object. Each item in
@@ -109,15 +109,9 @@ print("Enter Twitter HashTag to search for")
 words = input()
 print("Enter Start Date of Range of Tweets in yyyy-mm-dd")
 date_since = input()
-print("Enter End Date of Range of Tweets in yyyy-mm-dd")
-date_to = input()
 
 
 # number of tweets you want to extract in one run
 numtweet = 10
-scrape(words, date_since, date_to, numtweet)
+scrape(words, date_since, numtweet)
 print('Scraping has completed!')
-
-for tweet in tweets:
-    print(tweet.text)
-    print("\n")
