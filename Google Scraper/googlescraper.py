@@ -56,7 +56,7 @@ def generateTickerInterest():
         # average them and put them in averageList
         averagesToBeAdded = []
         for item in historicalDataFrame:
-            averagesToBeAdded.append(historicalDataFrame[item].mean().round(3))
+            averagesToBeAdded.append(historicalDataFrame[item].mean())
         
         normalizationFactor=normalizingTickerAverage/averagesToBeAdded[0]
 
@@ -97,11 +97,11 @@ def generateTickerInterest():
 
             print(historicalDataFrame)
             # average them and put them in averageList
-            average = historicalDataFrame.iloc[:, 1].mean().round(3)
-            normalizationFactor=normalizingTickerAverage/(historicalDataFrame.iloc[:, 0].mean().round(3))
+            average = historicalDataFrame.iloc[:, 1].mean()
+            normalizationFactor=normalizingTickerAverage/(historicalDataFrame.iloc[:, 0].mean())
             normalisedVal=normalizationFactor*average
 
-            config.averageListFinal[config.tickersFiltered.index(tickersToRedo[0])] = normalisedVal
+            config.averageListFinal[config.tickersFiltered.index(tickersToRedo[0])] = normalisedVal.round(3)
 
             tickersToAnalyzeAverages.clear()
             tickersToRedo.pop(0)
