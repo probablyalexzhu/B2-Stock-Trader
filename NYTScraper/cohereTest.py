@@ -4,11 +4,7 @@ from cohere.classify import Example
 
 def printScoresExample():
   config = configparser.ConfigParser()
-<<<<<<< HEAD
-  config.read('Twitter Scraper\config.ini')
-=======
   config.read('NYTScraper\config.ini')
->>>>>>> 56fe98054ac34afcbd3272f6a70a87ec5637fd29
   api_key = config['cohere']['cohere_key']
   co = cohere.Client(api_key)
 
