@@ -1,5 +1,5 @@
 # Author: Alex Zhu
-# Last Updated: Dec 20, 2022
+# Last Updated: Dec 21, 2022
 # Help from https://medium.com/analytics-vidhya/compare-more-than-5-keywords-in-google-trends-search-using-pytrends-3462d6b5ad62
 
 import pandas as pd                        
