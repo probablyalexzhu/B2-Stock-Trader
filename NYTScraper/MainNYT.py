@@ -5,6 +5,9 @@ import datetime
 import pandas as pd
 import configparser
 import config
+import os
+from openpyxl import load_workbook
+
 # initiate connection w/ personal API key
 configp = configparser.ConfigParser()
 configp.read('NYTScraper\config.ini')
@@ -13,16 +16,19 @@ api_key = configp['NYT']['NYT_key']
 nyt = NYTAPI(api_key, parse_dates=True)
 
 def generateArticleText():
-# df = pd.read_excel(open('GoogleScraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
-# namesFiltered = df["Company"].tolist()
+    df = pd.read_excel(open('GoogleScraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
+    namesFiltered = df["Company"].tolist()
+    
     config.yearToAnalyze = 2016
-    namesFiltered = ["tesla", "apple"]
 
-    articleText = []
+    for i in range(0, len(config.namesFiltered)): # manually shift the indexes to cover all the articles without rate limiting
+        headlineList = getArticles(namesFiltered[i])
 
-    for company in namesFiltered:
-        dataframe = getArticles(company).tolist()
-        print(dataframe)
+        with pd.ExcelWriter('ArticleHeadlines.xlsx', mode='a') as writer:
+            headlineList.to_excel(writer, sheet_name=str(i), index=False)
+
+        print("done")
+    nyt.close()
 
 def getArticles(q):
     articles = nyt.article_search(
@@ -31,6 +37,15 @@ def getArticles(q):
         dates = {
             "begin": datetime.datetime(config.yearToAnalyze - 1, 1, 1),
             "end": datetime.datetime(config.yearToAnalyze, 1, 1)
+        },
+        options = {
+        "sort": "oldest",
+        "sources": [
+            "New York Times",
+            "AP",
+            "Reuters",
+            "International Herald Tribune"
+        ]
         }
     )
 
@@ -43,5 +58,4 @@ def getArticles(q):
     #data={'headline': list(headline), 'author': list(author), 'leadparagraph':list(leadparagraph),'publication date': list(pubdate), "keywords": list(keywords)}
     data={'headline': list(headline)}
     df = pd.DataFrame(data)
-    nyt.close()
     return df

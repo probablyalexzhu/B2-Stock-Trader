@@ -7,6 +7,6 @@ namesFiltered = []
 
 googAverageListFinal = []
 NYTScores = []
-sumScores = []
 
+sumScores = []
 portfolio = []
