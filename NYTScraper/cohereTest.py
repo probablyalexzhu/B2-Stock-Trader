@@ -15,8 +15,6 @@ def printScoresExample():
     Example("The item exceeded my expectations", "positive"), 
     Example("I want to return my item", "negative"), 
     Example("The item\'s material feels low quality", "negative"), 
-    Example("I used the product this morning", "neutral"), 
-    Example("The product arrived yesterday", "neutral"),
   ]
 
   # make new inputs
