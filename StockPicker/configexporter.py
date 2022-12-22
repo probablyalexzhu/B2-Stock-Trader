@@ -23,5 +23,8 @@ def printPortfolio():
         text_file.write(str(config.portfolio))
 
 def sumScore():
+    # sus temporary code
+    df = pd.read_excel(open('ConfigSheet.xlsx', 'rb'), sheet_name='Sheet1')
+    config.NYTScores = df["Sentiment"]
     for idx, x in enumerate(config.googAverageListFinal):
-        config.sumScores.append(config.NYTScores[idx] - config.googAverageListFinal[idx])
+        config.sumScores.append(config.NYTScores[idx] - x)

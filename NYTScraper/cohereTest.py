@@ -1,14 +1,13 @@
 import cohere
 import configparser
+import config
 from cohere.classify import Example
 import pandas as pd
 
-config = configparser.ConfigParser()
-config.read('NYTScraper\config.ini')
-api_key = config['cohere']['cohere_key']
+config2 = configparser.ConfigParser()
+config2.read('NYTScraper\config.ini')
+api_key = config2['cohere']['cohere_key']
 co = cohere.Client(api_key)
-
-# write some example headline analyzers
 
 examples=[
   Example("The order came 5 days early", "positive"), 
@@ -35,36 +34,32 @@ examples=[
   Example("This is so unfair", "negative"),
 ]
 
-# def printScoresExample():
-  # make new inputs
-inputs=[
-  "This item was broken when it arrived",
-  "The product is amazing",
-  "The product was not too bad",
-]
+def cohereSentiment(examples, idx):
+  inputs2 = getInputs(idx)
+  if len(inputs2)==0:
+    pos = -1
+  else:
+    response = co.classify(
+      model='medium',
+      inputs=inputs2,
+      examples=examples,
+    )
+    positive_confidences = []
 
-def cohereSentiment(input, examples):
-  response = co.classify(
-    model='medium',
-    inputs=input,
-    examples=examples,
-  )
-  positive_confidences = []
+    for classification in response.classifications:
+      if classification.prediction == "positive":
+        positive_confidences.append(classification.confidence)
+      elif classification.prediction == "negative":
+        positive_confidences.append(1-classification.confidence)
 
-  for classification in response.classifications:
-    print(classification)
-    if classification.prediction == "positive":
-      positive_confidences.append(classification.confidence)
-    elif classification.prediction == "negative":
-      positive_confidences.append(1-classification.confidence)
-
-  pos = sum(positive_confidences)
-  pos /=len(inputs)
-
+    pos = sum(positive_confidences)
+    pos /=len(inputs2)
+  pos = round(pos, 3)
   print(pos)
+  config.NYTScores.append(pos)
 
-#return positive - negative 
-# loop through these to put these into config.NYTScores
+  #return positive - negative 
+  # loop through these to put these into config.NYTScores
 
 def getInputs(idx):
   df = pd.read_excel(open('ArticleHeadlines.xlsx', 'rb'), sheet_name=str(idx))
@@ -72,4 +67,8 @@ def getInputs(idx):
   list = []
   for x in articles:
     list.append(x)
-  print(list)
+  return list
+
+def generateNYTScores():
+  for i in range(0, 82): # set this to length of tickersFiltered
+    cohereSentiment(examples, i)
