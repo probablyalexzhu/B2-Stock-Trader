@@ -8,12 +8,11 @@ from NYTScraper.MainNYT import *
 
 def main():
     print("Hello World!")
-    generateArticleText()
     # generateTickersByYear(2016)
     # generateGoogScore()
     # graph()
 
-    # # add command to generate and save NYTScores
+    # generateArticleText()
     # sumScore()
     # pickStocks()
     # createPortfolio()
