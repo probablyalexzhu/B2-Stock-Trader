@@ -1,8 +1,8 @@
 # Main Method for Google Scraper of Tickers
 import config
-from googlescraper import *
-from tickerparser import *
-from configexporter import *
+from GoogleScraper.googlescraper import *
+from GoogleScraper.tickerparser import *
+from GoogleScraper.configexporter import *
 
 def main():
     print("Hello World!")
