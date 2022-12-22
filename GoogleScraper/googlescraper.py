@@ -25,13 +25,13 @@ def generateTickerInterest():
     print(historicalDataFrame)
     # average them and put them in averageList
     for item in historicalDataFrame:
-        config.averageListFinal.append(historicalDataFrame[item].mean().round(3))
+        config.googAverageListFinal.append(historicalDataFrame[item].mean().round(3))
         tickersDoneCounter += 1
     tickersDoneCounter -= 1 # The isPartial column
 
     print("Initial tickers done: " + str(tickersDoneCounter))
 
-    normalizingTickerAverage = config.averageListFinal[0]
+    normalizingTickerAverage = config.googAverageListFinal[0]
     tickersToAnalyzeAverages.clear()
 
     # loop rest of tickers
@@ -77,17 +77,17 @@ def generateTickerInterest():
         averagesToBeAdded.pop(0)
         print("Averages to be added: " + str(averagesToBeAdded))
         print("tickers done counter: " + str(tickersDoneCounter))
-        config.averageListFinal += averagesToBeAdded
+        config.googAverageListFinal += averagesToBeAdded
 
         tickersToAnalyzeAverages.clear()
         # normalizingTickerAverage = config.averageListFinal[i] # optimizable?
 
     # sometimes pytrends fails, returns 0 searches, deal with those cases
     tries = 0
-    while 0 in config.averageListFinal and tries < 0: # too high and 429 too many requests
+    while 0 in config.googAverageListFinal and tries < 0: # too high and 429 too many requests
 
         tickersToRedo = []
-        for idx, x in enumerate(config.averageListFinal):
+        for idx, x in enumerate(config.googAverageListFinal):
             if(not x):
                 tickersToRedo.append(config.tickersFiltered[idx])
         print("TICKERS TO REDO OMEGALUL: " + str(tickersToRedo))
@@ -107,7 +107,7 @@ def generateTickerInterest():
             normalizationFactor=normalizingTickerAverage/float((historicalDataFrame.iloc[:, 0].mean()))
             normalizedVal=normalizationFactor*average
 
-            config.averageListFinal[config.tickersFiltered.index(tickersToRedo[0])] = normalizedVal.round(3)
+            config.googAverageListFinal[config.tickersFiltered.index(tickersToRedo[0])] = normalizedVal.round(3)
 
             tickersToAnalyzeAverages.clear()
             tickersToRedo.pop(0)
@@ -115,8 +115,8 @@ def generateTickerInterest():
 
         tries += 1
 
-    print(config.averageListFinal)
-    maximum = max(config.averageListFinal)
+    print(config.googAverageListFinal)
+    maximum = max(config.googAverageListFinal)
     print(maximum)
 
-    config.averageListFinal[:] = [x / maximum for x in config.averageListFinal]
+    config.googAverageListFinal[:] = [x / maximum for x in config.googAverageListFinal]
