@@ -1,6 +1,7 @@
 import cohere
 import configparser
 from cohere.classify import Example
+import pandas as pd
 
 config = configparser.ConfigParser()
 config.read('NYTScraper\config.ini')
@@ -62,5 +63,13 @@ def cohereSentiment(input, examples):
 
   print(pos)
 
-  #return positive - negative 
-  # loop through these to put these into config.NYTScores
+#return positive - negative 
+# loop through these to put these into config.NYTScores
+
+def getInputs(idx):
+  df = pd.read_excel(open('ArticleHeadlines.xlsx', 'rb'), sheet_name=str(idx))
+  articles = df["headline"]
+  list = []
+  for x in articles:
+    list.append(x)
+  print(list)
