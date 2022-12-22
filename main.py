@@ -6,10 +6,10 @@ from GoogleScraper.configexporter import *
 
 def main():
     print("Hello World!")
-    generateTickersByYear(2016)
-    generateTickerInterest()
-    exportConfig()
-    graph()
+    # generateTickersByYear(2016)
+    # generateTickerInterest()
+    # exportConfig()
+    # graph()
 
 if __name__ == "__main__":
     main()

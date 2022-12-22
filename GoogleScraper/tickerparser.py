@@ -10,7 +10,7 @@ def generateTickersByYear(year):
         raise Exception("Year not between 2008 and 2016")
 
     # NYSE sheet has been pre-processed to only include NASDAQ 100 stocks that are also on the NYSE
-    df = pd.read_excel(open('Google Scraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
+    df = pd.read_excel(open('GoogleScraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
     tickersUnfiltered = df["Ticker"]
     namesUnfiltered = df["Company"]
     NASDAQorNot = df[config.yearToAnalyze]
