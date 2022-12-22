@@ -15,7 +15,7 @@ def graph():
     plt.xlabel('Search volume')
     plt.show()
 
-def createPortfolio():
+def printPortfolio():
     print("### PORTFOLIO OF SHIT TO BUY AT YOUR OWN RISK ###")
     print(config.portfolio)
 
@@ -24,4 +24,4 @@ def createPortfolio():
 
 def sumScore():
     for idx, x in enumerate(config.googAverageListFinal):
-        config.sumScores.append((config.googAverageListFinal[idx] + config.NYTScores[idx]) / 2)
+        config.sumScores.append(config.NYTScores[idx] - config.googAverageListFinal[idx])
