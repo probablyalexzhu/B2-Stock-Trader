@@ -15,13 +15,12 @@ def graph():
     plt.xlabel('Search volume')
     plt.show()
 
-def printPortfolio():
+def createPortfolio():
     print("### PORTFOLIO OF SHIT TO BUY AT YOUR OWN RISK ###")
     print(config.portfolio)
 
-    text_file = open("portfolio.txt", "w")
-    n = text_file.write(str(config.portfolio))
-    text_file.close()
+    with open("Portfolio.txt", "w") as text_file:
+        text_file.write(str(config.portfolio))
 
 
 def sumScore():

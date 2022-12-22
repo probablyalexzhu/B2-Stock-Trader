@@ -14,8 +14,8 @@ def main():
     # add command to generate and save NYTScores
     sumScore()
     pickStocks()
-    printPortfolio()
+    createPortfolio()
     exportConfig()
-    
+
 if __name__ == "__main__":
     main()
