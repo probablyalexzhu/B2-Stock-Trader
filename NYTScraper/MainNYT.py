@@ -13,16 +13,16 @@ api_key = configp['NYT']['NYT_key']
 nyt = NYTAPI(api_key, parse_dates=True)
 
 def generateArticleText():
-# df = pd.read_excel(open('GoogleScraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
-# namesFiltered = df["Company"].tolist()
+    df = pd.read_excel(open('GoogleScraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
+    namesFiltered = df["Company"].tolist()
+    
     config.yearToAnalyze = 2016
-    namesFiltered = ["tesla", "apple"]
-
-    articleText = []
 
     for company in namesFiltered:
-        dataframe = getArticles(company).tolist()
-        print(dataframe)
+        headlineList = getArticles(company).values.tolist()
+        config.articleTextList.append(headlineList)
+        print("done")
+    print(config.articleTextList)
 
 def getArticles(q):
     articles = nyt.article_search(

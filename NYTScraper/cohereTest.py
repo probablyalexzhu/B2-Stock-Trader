@@ -6,7 +6,7 @@ def printScoresExample():
   config = configparser.ConfigParser()
   config.read('Twitter Scraper\config.ini')
   api_key = config['cohere']['cohere_key']
-  co = cohere.Client('gm8A89mCG1RJmWhk8whhPlpete9K3Z61WKlTDwIi')
+  co = cohere.Client(api_key)
 
   # write some example headline analyzers
 

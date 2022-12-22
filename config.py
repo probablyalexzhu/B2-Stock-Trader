@@ -6,7 +6,9 @@ tickersFiltered = [] # Tickers in the NYSE from that year's NASDAQ100
 namesFiltered = []
 
 googAverageListFinal = []
-NYTScores = []
-sumScores = []
 
+articleTextList = []
+NYTScores = []
+
+sumScores = []
 portfolio = []
