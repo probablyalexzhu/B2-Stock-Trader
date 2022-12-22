@@ -1,8 +1,8 @@
 #Run this in command prompt on windows for best results
-
 import tweepy
 import configparser
 import pandas as pd
+
 
 # function to display data of each tweet
 def printtweetdata(n, ith_tweet):
@@ -109,9 +109,10 @@ print("Enter Twitter HashTag to search for")
 words = input()
 print("Enter Start Date of Range of Tweets in yyyy-mm-dd")
 date_since = input()
-
+print("Enter End Date of Range of Tweets in yyyy-mm-dd")
+date_to = input()
 
 # number of tweets you want to extract in one run
 numtweet = 10
-scrape(words, date_since, numtweet)
+scrape(words, date_since, date_to, numtweet)
 print('Scraping has completed!')
