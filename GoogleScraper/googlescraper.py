@@ -8,7 +8,7 @@ import config
 import warnings
 warnings.filterwarnings('ignore')
 
-def generateTickerInterest():
+def generateGoogScore():
     tickersToAnalyzeAverages = [] # temporary list of tickers to analyze
     tickersDoneCounter = 0
 
