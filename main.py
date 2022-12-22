@@ -3,7 +3,7 @@ import config
 from GoogleScraper.googlescraper import *
 from GoogleScraper.tickerparser import *
 from StockPicker.configexporter import *
-from StockPicker.stockPicker import *
+from StockPicker.portfolioPicker import *
 
 def main():
     print("Hello World!")
@@ -14,7 +14,7 @@ def main():
     # add command to generate and save NYTScores
     sumScore()
     pickStocks()
-    createPortfolio()
+    printPortfolio()
     exportConfig()
 
 if __name__ == "__main__":
