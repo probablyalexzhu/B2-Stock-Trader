@@ -22,8 +22,6 @@ examples=[
   Example("The package was damaged", "negative"), 
   Example("The order is 5 days late", "negative"), 
   Example("The order was incorrect", "negative"), 
-  Example("I want to return my item", "negative"), 
-  Example("The item\'s material feels low quality", "negative"),
   Example("I'm so proud of you", "positive"), 
   Example("What a great time to be alive", "positive"), 
   Example("That's awesome work", "positive"), 
@@ -44,20 +42,25 @@ inputs=[
   "The product was not too bad",
 ]
 
-response = co.classify(
-  model='medium',
-  inputs=inputs,
-  examples=examples,
-)
-print(response.classifications)
-print("now magic ")
-positive_confidences = []
+def cohereSentiment(input, examples):
+  response = co.classify(
+    model='medium',
+    inputs=input,
+    examples=examples,
+  )
+  positive_confidences = []
 
-for classification in response.classifications:
-  print(response.classifications.labels)
+  for classification in response.classifications:
+    print(classification)
+    if classification.prediction == "positive":
+      positive_confidences.append(classification.confidence)
+    elif classification.prediction == "negative":
+      positive_confidences.append(1-classification.confidence)
 
+  pos = sum(positive_confidences)
+  pos /=len(inputs)
 
-print(pos-neg)
+  print(pos)
 
-#return positive - negative 
-# loop through these to put these into config.NYTScores
+  #return positive - negative 
+  # loop through these to put these into config.NYTScores
