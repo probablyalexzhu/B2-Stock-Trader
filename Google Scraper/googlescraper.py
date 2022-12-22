@@ -4,43 +4,107 @@
 
 import pandas as pd                        
 from pytrends.request import TrendReq
-import matplotlib.pyplot as plt
-import numpy as np
-import tickerparser
+import config
+import warnings
+warnings.filterwarnings('ignore')
 
-list1=['AAL','AAPL','ADBE', 'ADP','ADI']
-list2=['ADI', 'ADSK' ,'AKAM','AMAT' ,'AMGN']
+def generateTickerInterest():
+    tickersToAnalyzeAverages = [] # temporary list of tickers to analyze
+    tickersDoneCounter = 0
 
-pytrends1=TrendReq()
-pytrends2=TrendReq()
+    # do first 5 tickers in separate case
+    for idx in range(5):
+        tickersToAnalyzeAverages.append(config.tickersFiltered[idx]);
 
-pytrends1.build_payload(list1,geo='US',timeframe="2016-12-14 2017-01-25")
-pytrends2.build_payload(list2,geo='US',timeframe="today 12-m")
+    #historical interest
+    pytrends1=TrendReq()
+    historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=config.yearToAnalyze, month_start=12,
+        day_start=1, hour_start=0, year_end=config.yearToAnalyze, month_end=12, day_end=31, hour_end=0, cat=0,
+        geo='', gprop='', sleep=0)
 
-df1=pytrends1.interest_over_time()
-df2=pytrends2.interest_over_time()
+    print(historicalDataFrame)
+    # average them and put them in averageList
+    for item in historicalDataFrame:
+        config.averageListFinal.append(historicalDataFrame[item].mean().round(3))
+        tickersDoneCounter += 1
+    tickersDoneCounter -= 1 # The isPartial column
 
-averageList1=[]
-averageList2=[]
-for item in list1:
-    averageList1.append(df1[item].mean().round(0))
-for item in list2:
-    averageList2.append(df2[item].mean().round(0))
+    print("Initial tickers done: " + str(tickersDoneCounter))
 
-normalizationFactor=averageList1[0]/averageList2[0]
+    normalizingTickerAverage = config.averageListFinal[0]
+    tickersToAnalyzeAverages.clear()
 
-for i in range(len(averageList2)):
-    normalisedVal=normalizationFactor*averageList2[i]
-    averageList2[i]=normalisedVal.round(0)
-averageList2.pop(0)
-list2.pop(0)
+    # loop rest of tickers
+    for i in range(5,config.numTickers, 4):
+        tickersToAnalyzeAverages.append(config.tickersFiltered[0]) # previous breakpoint: add ticker used for normalization
+        
+        if(config.numTickers - i < 4):
+            for j in range(1, config.numTickers - i):
+                tickersToAnalyzeAverages.append(config.tickersFiltered[j + tickersDoneCounter - 1])
+        else:
+            for j in range(1, 5):
+                tickersToAnalyzeAverages.append(config.tickersFiltered[j + tickersDoneCounter - 1])
 
-TVSeriesList=list1+list2
+        print("Tickers to analyze averages: " + str(tickersToAnalyzeAverages))
 
-finalAverageList=averageList1+averageList2
+        pytrends1=TrendReq()
+        historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=config.yearToAnalyze, month_start=12,
+            day_start=1, hour_start=0, year_end=config.yearToAnalyze, month_end=12, day_end=2, hour_end=0, cat=0,
+            geo='', gprop='', sleep=0)
 
-y_pos=np.arange(len(TVSeriesList))
-plt.barh(y_pos,finalAverageList,align='center',alpha=0.5)
-plt.yticks(y_pos,TVSeriesList)
-plt.xlabel('Average popularity')
-plt.show()
+        print(historicalDataFrame)
+        # average them and put them in averageList
+        averagesToBeAdded = []
+        for item in historicalDataFrame:
+            averagesToBeAdded.append(historicalDataFrame[item].mean())
+        
+        normalizationFactor=normalizingTickerAverage/averagesToBeAdded[0]
+
+        for k in range(len(averagesToBeAdded)):
+            normalisedVal=normalizationFactor*averagesToBeAdded[k]
+            averagesToBeAdded[k]=normalisedVal.round(3)
+            tickersDoneCounter += 1
+
+        # remove the normalizer and the isPartial column from the counter
+        tickersDoneCounter -= 2
+        averagesToBeAdded.pop(len(averagesToBeAdded) - 1)
+        averagesToBeAdded.pop(0)
+        print("Averages to be added: " + str(averagesToBeAdded))
+        print("tickers done counter: " + str(tickersDoneCounter))
+        config.averageListFinal += averagesToBeAdded
+
+        tickersToAnalyzeAverages.clear()
+        # normalizingTickerAverage = config.averageListFinal[i] # optimizable?
+
+    # sometimes pytrends fails, returns 0 searches, deal with those cases
+    tries = 0
+    while 0 in config.averageListFinal and tries < 3:
+
+        tickersToRedo = []
+        for idx, x in enumerate(config.averageListFinal):
+            if(not x):
+                tickersToRedo.append(config.tickersFiltered[idx])
+        print("TICKERS TO REDO OMEGALUL: " + str(tickersToRedo))
+
+        
+        while(len(tickersToRedo) > 0):
+            tickersToAnalyzeAverages.append(config.tickersFiltered[0])
+            tickersToAnalyzeAverages.append(tickersToRedo[0])
+            pytrends1=TrendReq()
+            historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=config.yearToAnalyze, month_start=12,
+                day_start=1, hour_start=0, year_end=config.yearToAnalyze, month_end=12, day_end=31, hour_end=0, cat=0,
+                geo='', gprop='', sleep=0)
+
+            print(historicalDataFrame)
+            # average them and put them in averageList
+            average = historicalDataFrame.iloc[:, 1].mean()
+            normalizationFactor=normalizingTickerAverage/(historicalDataFrame.iloc[:, 0].mean())
+            normalisedVal=normalizationFactor*average
+
+            config.averageListFinal[config.tickersFiltered.index(tickersToRedo[0])] = normalisedVal.round(3)
+
+            tickersToAnalyzeAverages.clear()
+            tickersToRedo.pop(0)
+            print("TICKERS TO REDO: " + str(tickersToRedo))
+
+        tries += 1
