@@ -22,7 +22,6 @@ def createPortfolio():
     with open("Portfolio.txt", "w") as text_file:
         text_file.write(str(config.portfolio))
 
-
 def sumScore():
     for idx, x in enumerate(config.googAverageListFinal):
         config.sumScores.append((config.googAverageListFinal[idx] + config.NYTScores[idx]) / 2)
