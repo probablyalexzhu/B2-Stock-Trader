@@ -1,5 +1,5 @@
 # Author: Alex Zhu
-# Last Updated: Dec 20, 2022
+# Last Updated: Dec 21, 2022
 # Help from https://medium.com/analytics-vidhya/compare-more-than-5-keywords-in-google-trends-search-using-pytrends-3462d6b5ad62
 
 import pandas as pd                        
@@ -8,7 +8,7 @@ import config
 import warnings
 warnings.filterwarnings('ignore')
 
-def generateTickerInterest():
+def generateGoogScore():
     tickersToAnalyzeAverages = [] # temporary list of tickers to analyze
     tickersDoneCounter = 0
 
@@ -25,13 +25,13 @@ def generateTickerInterest():
     print(historicalDataFrame)
     # average them and put them in averageList
     for item in historicalDataFrame:
-        config.averageListFinal.append(historicalDataFrame[item].mean().round(3))
+        config.googAverageListFinal.append(historicalDataFrame[item].mean().round(3))
         tickersDoneCounter += 1
     tickersDoneCounter -= 1 # The isPartial column
 
     print("Initial tickers done: " + str(tickersDoneCounter))
 
-    normalizingTickerAverage = config.averageListFinal[0]
+    normalizingTickerAverage = config.googAverageListFinal[0]
     tickersToAnalyzeAverages.clear()
 
     # loop rest of tickers
@@ -49,7 +49,7 @@ def generateTickerInterest():
 
         pytrends1=TrendReq()
         historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=config.yearToAnalyze, month_start=12,
-            day_start=1, hour_start=0, year_end=config.yearToAnalyze, month_end=12, day_end=2, hour_end=0, cat=0,
+            day_start=1, hour_start=0, year_end=config.yearToAnalyze, month_end=12, day_end=1, hour_end=12, cat=0,
             geo='', gprop='', sleep=0)
 
         print(historicalDataFrame)
@@ -58,11 +58,17 @@ def generateTickerInterest():
         for item in historicalDataFrame:
             averagesToBeAdded.append(historicalDataFrame[item].mean())
         
-        normalizationFactor=normalizingTickerAverage/averagesToBeAdded[0]
+        print("normalizingTickerAverage: " + str(normalizingTickerAverage))
+        print("averages to be added: " + str(float(averagesToBeAdded[0])))
+
+        normalizationFactor=normalizingTickerAverage/float(averagesToBeAdded[0])
+
+        print("normalizationFactor: " + str(normalizationFactor))
 
         for k in range(len(averagesToBeAdded)):
-            normalisedVal=normalizationFactor*averagesToBeAdded[k]
-            averagesToBeAdded[k]=normalisedVal.round(3)
+            normalizedVal=normalizationFactor*averagesToBeAdded[k]
+
+            averagesToBeAdded[k]=normalizedVal.round(3)
             tickersDoneCounter += 1
 
         # remove the normalizer and the isPartial column from the counter
@@ -71,17 +77,17 @@ def generateTickerInterest():
         averagesToBeAdded.pop(0)
         print("Averages to be added: " + str(averagesToBeAdded))
         print("tickers done counter: " + str(tickersDoneCounter))
-        config.averageListFinal += averagesToBeAdded
+        config.googAverageListFinal += averagesToBeAdded
 
         tickersToAnalyzeAverages.clear()
         # normalizingTickerAverage = config.averageListFinal[i] # optimizable?
 
     # sometimes pytrends fails, returns 0 searches, deal with those cases
     tries = 0
-    while 0 in config.averageListFinal and tries < 3:
+    while 0 in config.googAverageListFinal and tries < 0: # too high and 429 too many requests
 
         tickersToRedo = []
-        for idx, x in enumerate(config.averageListFinal):
+        for idx, x in enumerate(config.googAverageListFinal):
             if(not x):
                 tickersToRedo.append(config.tickersFiltered[idx])
         print("TICKERS TO REDO OMEGALUL: " + str(tickersToRedo))
@@ -98,13 +104,19 @@ def generateTickerInterest():
             print(historicalDataFrame)
             # average them and put them in averageList
             average = historicalDataFrame.iloc[:, 1].mean()
-            normalizationFactor=normalizingTickerAverage/(historicalDataFrame.iloc[:, 0].mean())
-            normalisedVal=normalizationFactor*average
+            normalizationFactor=normalizingTickerAverage/float((historicalDataFrame.iloc[:, 0].mean()))
+            normalizedVal=normalizationFactor*average
 
-            config.averageListFinal[config.tickersFiltered.index(tickersToRedo[0])] = normalisedVal.round(3)
+            config.googAverageListFinal[config.tickersFiltered.index(tickersToRedo[0])] = normalizedVal.round(3)
 
             tickersToAnalyzeAverages.clear()
             tickersToRedo.pop(0)
             print("TICKERS TO REDO: " + str(tickersToRedo))
 
         tries += 1
+
+    print(config.googAverageListFinal)
+    maximum = max(config.googAverageListFinal)
+    print(maximum)
+
+    config.googAverageListFinal[:] = [x / maximum for x in config.googAverageListFinal]
