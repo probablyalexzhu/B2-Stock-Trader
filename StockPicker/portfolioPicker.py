@@ -8,7 +8,7 @@ def pickStocks():
     localFinalScores = json.loads(localFinalScoresFile)
 
     localTickersFiltered = []
-    with open('TempFiles/namesFiltered.json') as json_file:
+    with open('TempFiles/tickersFiltered.json') as json_file:
         localTickersFilteredFile = json.load(json_file)
     localTickersFiltered = json.loads(localTickersFilteredFile)
 
