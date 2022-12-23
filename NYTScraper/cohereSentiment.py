@@ -75,4 +75,10 @@ def generateNYTScores():
 
   for i in range(0, numTickers):
     cohereSentiment(examples, i)
+
+  print(config.NYTScores)
+  maximum = max(config.NYTScores)
+  print(maximum)
+
+  config.NYTScores[:] = [x / maximum for x in config.NYTScores]
   exportNYTScores()

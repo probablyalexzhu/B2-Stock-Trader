@@ -15,9 +15,9 @@ def main():
     # graph()
     # generateArticleText()
     generateNYTScores()
-    # sumScore()
-    # pickStocks()
-    # printPortfolio()
+    sumScore()
+    pickStocks()
+    printPortfolio()
 
 if __name__ == "__main__":
     main()

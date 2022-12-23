@@ -42,8 +42,12 @@ def exportNYTScores():
     with open('TempFiles/NYTScores.json', 'w', encoding='utf-8') as f:
         json.dump(json_list, f, ensure_ascii=False, indent=4)
 
-def graph():
+def exportFinalScores():
+    json_list = json.dumps(config.finalScores)
+    with open('TempFiles/finalScores.json', 'w', encoding='utf-8') as f:
+        json.dump(json_list, f, ensure_ascii=False, indent=4)
 
+def graph():
     localTickersFiltered = []
     with open('TempFiles/tickersFiltered.json') as json_file:
         localTickersFilteredFile = json.load(json_file)
@@ -64,15 +68,37 @@ def graph():
     plt.show()
 
 def printPortfolio():
-    print("### PORTFOLIO OF SHIT TO BUY AT YOUR OWN RISK ###")
-    print(config.portfolio)
+    yearNumTickers = []
+    with open('TempFiles/yearNumTickers.json') as json_file:
+        yearNumTickersFile = json.load(json_file)
+    yearNumTickers = json.loads(yearNumTickersFile)
+    year = yearNumTickers[0]
 
-    with open("Portfolio.txt", "w") as text_file:
-        text_file.write(str(config.portfolio))
+    output = "Portfolio for " + str(year) + "\n"
+    for x in config.portfolio:
+        output += x + "\n"
+    print(output)
+
+    with open("TempFiles/Portfolio.txt", "w") as text_file:
+        text_file.write(output)
 
 def sumScore():
-    # sus temporary code
-    df = pd.read_excel(open('ConfigSheet.xlsx', 'rb'), sheet_name='Sheet1')
-    config.NYTScores = df["Sentiment"]
-    for idx, x in enumerate(config.searchScores):
-        config.finalScores.append(config.NYTScores[idx] - x)
+    localSearchScores = []
+    with open('TempFiles/searchScores.json') as json_file:
+        localSearchScoresFile = json.load(json_file)
+    localSearchScores = json.loads(localSearchScoresFile)
+
+    localNYTScores = []
+    with open('TempFiles/NYTScores.json') as json_file:
+        localNYTScoresFile = json.load(json_file)
+    localNYTScores = json.loads(localNYTScoresFile)
+    
+    for idx, x in enumerate(localSearchScores):
+        score = -1
+        if (localNYTScores[idx] != -1 and x != 0):
+            score = localNYTScores[idx] - x
+        # else:
+        #     print("stock had error, don't pick: " + str(idx))
+        config.finalScores.append(score)
+    
+    exportFinalScores()

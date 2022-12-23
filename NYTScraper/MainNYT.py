@@ -42,8 +42,6 @@ def generateArticleText():
     # print(config.headlineLists)
     exportHeadlineLists()
 
-    
-
 def getArticles(q, year):
     articles = nyt.article_search(
         query = q,
