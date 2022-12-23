@@ -74,7 +74,7 @@ def printPortfolio():
     yearNumTickers = json.loads(yearNumTickersFile)
     year = yearNumTickers[0]
 
-    output = "Portfolio for " + str(year) + "\n"
+    output = "B2 Portfolio for " + str(year) + "\n"
     for x in config.portfolio:
         output += x + "\n"
     print(output)

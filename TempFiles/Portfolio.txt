@@ -1,11 +1,11 @@
-Portfolio for 2015
-Gilead Sciences, Inc.: Gilead Sciences, Inc., 0.7289133192623893
-Biogen, Inc.: Biogen, Inc., 0.6363449909320477
-Mattel, Inc.: Mattel, Inc., 0.4461967665286568
-Amgen Inc.: Amgen Inc., 0.4153638276553986
-Intel Corp.: Intel Corp., 0.34067331191797645
-Regeneron Pharmaceuticals: Regeneron Pharmaceuticals, 0.34052741772839534
-Amazon.com, Inc.: Amazon.com, Inc., 0.33957596248501953
-Netflix: Netflix, 0.30587593965067844
-SBA Communications: SBA Communications, 0.3000335205788286
-Google Inc. Class A: Google Inc. Class A, 0.2762714795571249
+B2 Portfolio for 2015
+Gilead Sciences, Inc.: Gilead Sciences, Inc., 0.73
+Biogen, Inc.: Biogen, Inc., 0.64
+Mattel, Inc.: Mattel, Inc., 0.45
+Amgen Inc.: Amgen Inc., 0.42
+Intel Corp.: Intel Corp., 0.34
+Regeneron Pharmaceuticals: Regeneron Pharmaceuticals, 0.34
+Amazon.com, Inc.: Amazon.com, Inc., 0.34
+Netflix: Netflix, 0.31
+SBA Communications: SBA Communications, 0.30
+Google Inc. Class A: Google Inc. Class A, 0.28

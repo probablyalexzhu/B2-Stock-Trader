@@ -26,7 +26,7 @@ def pickStocks():
         i += 1
     
     localFinalScores = json.loads(localFinalScoresFile) # to get values back so they aren't -1
-    print("indexes: " + str(indexesOfBestStocks))
+    # print("indexes: " + str(indexesOfBestStocks))
 
     for idx, x in enumerate(indexesOfBestStocks):
-        config.portfolio.append(localTickersFiltered[x] + ": " + localNamesFiltered[x] + ", " + str(localFinalScores[x]))
+        config.portfolio.append(localTickersFiltered[x] + ": " + localNamesFiltered[x] + ", " + str("{:.2f}".format(localFinalScores[x])))
