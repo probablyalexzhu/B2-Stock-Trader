@@ -7,6 +7,7 @@ import configparser
 import config
 import os
 from openpyxl import load_workbook
+import json
 
 # initiate connection w/ personal API key
 configp = configparser.ConfigParser()
@@ -17,18 +18,25 @@ nyt = NYTAPI(api_key, parse_dates=True)
 
 def generateArticleText():
     df = pd.read_excel(open('GoogleScraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
-    namesFiltered = df["Company"].tolist()
+    namesFilteredFromSheet = df["Company"].tolist()
     
     config.yearToAnalyze = 2016
 
-    for i in range(0, len(config.namesFiltered)): # manually shift the indexes to cover all the articles without rate limiting
-        headlineList = getArticles(namesFiltered[i])
+    tempHeadlineLists = []
 
-        with pd.ExcelWriter('ArticleHeadlines.xlsx', mode='a') as writer:
-            headlineList.to_excel(writer, sheet_name=str(i), index=False)
+    for i in range(0, 5): # manually shift the indexes to cover all the articles without rate limiting len(namesFilteredFromSheet)
+        tempHeadlineLists.append(getArticles(namesFilteredFromSheet[i]).values.tolist())
+        # with open("ArticleHeadlines.txt", "w") as text_file:
+        #     text_file.write(str(headlineList))
 
-        print("done")
+        print("done" + str(i))
     nyt.close()
+
+    print(tempHeadlineLists)
+
+    json_list = json.dumps(tempHeadlineLists)
+    with open('headlines.json', 'w', encoding='utf-8') as f:
+        json.dump(json_list, f, ensure_ascii=False, indent=4)
 
 def getArticles(q):
     articles = nyt.article_search(

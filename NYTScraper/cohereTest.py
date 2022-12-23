@@ -11,18 +11,19 @@ co = cohere.Client(api_key)
 
 examples=[
   Example("Apple’s Cut From App Sales Reached $4.5 Billion in 2014", "positive"),
-  Example("Morning Agenda: Split Decision for Greenberg in A.I.G. Lawsuit", "negative"),
-  Example("Apple’s New Job: Selling a Smartwatch to an Uninterested Public", "negative"),
   Example("Tests of Cholesterol Drugs Offer Hope of Reducing Heart Attacks and Strokes", "positive"),
   Example("F.D.A. Approves Amgen Drug to Treat Heart Failure", "positive"),
-  Example("Amazon’s Tax Deal With Luxembourg May Break Rules, E.U. Regulator Says", "negative"),
   Example("With Win, Amazon Shakes Up Yet Another Industry", "positive"),
   Example("Bobby Kotick’s Activision Blizzard to Buy King Digital, Maker of Candy Crush", "positive"),
   Example("Biogen Reports Its Alzheimer’s Drug Sharply Slowed Cognitive Decline", "positive"),
   Example("Intel Agrees to Buy Altera for $16.7 Billion", "positive"),
+  Example("SodaStream Hits Reset as Its Sales and Profit Fall", "negative"),
+  Example("Amazon’s Tax Deal With Luxembourg May Break Rules, E.U. Regulator Says", "negative"),
   Example("Comcast-Time Warner Cable Deal’s Collapse Leaves Frustrated Customers Out in the Cold", "negative"),
   Example("Daily Report: Tech Giants Said to Offer Bigger Settlement in Antitrust Case on Hiring", "negative"),
   Example("C.F.T.C. Accuses Kraft and Mondelez of Manipulating Wheat Prices", "negative"),
+  Example("Morning Agenda: Split Decision for Greenberg in A.I.G. Lawsuit", "negative"),
+  Example("Apple’s New Job: Selling a Smartwatch to an Uninterested Public", "negative")
 ]
 
 def cohereSentiment(examples, idx):
@@ -61,5 +62,5 @@ def getInputs(idx):
   return list
 
 def generateNYTScores():
-  for i in range(0, 82): # set this to length of tickersFiltered
+  for i in range(0, 1):
     cohereSentiment(examples, i)

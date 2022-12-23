@@ -8,20 +8,17 @@ from NYTScraper.MainNYT import *
 from NYTScraper.cohereTest import *
 
 def main():
+    # Should be run in this order: generate tickers, generate search scores, generate article text, generate nytscores, sum score, pick stocks, print portfolio
     print("Hello World!")
-    
-
-    generateTickersByYear(2016)
-    generateGoogScore()
-    graph()
+    # generateTickersByYear(2015)
+    # generateSearchScores()
+    # graph()
 
     # generateArticleText()
-    sumScore()
-    #generateNYTScores()
-    #print(config.NYTScores)
-    pickStocks()
-    printPortfolio()
-    # exportConfig()
+    # generateNYTScores()
+    # sumScore()
+    # pickStocks()
+    # printPortfolio()
 
 if __name__ == "__main__":
     main()

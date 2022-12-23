@@ -3,6 +3,7 @@
 
 import pandas as pd
 import config
+from StockPicker.configexporter import *
 
 def generateTickersByYear(year):
     config.yearToAnalyze = year
@@ -23,3 +24,7 @@ def generateTickersByYear(year):
     config.numTickers = len(config.tickersFiltered)
     print("Year: " + str(config.yearToAnalyze) + "\tNumber of Tickers: " + str(len(config.tickersFiltered)))
     print(config.tickersFiltered)
+
+    exportTickersFiltered()
+    exportNamesFiltered()
+    exportYearNumTickers()
