@@ -61,9 +61,18 @@ def getInputs(idx):
     localHeadLineListsFile = json.load(json_file)
   localHeadLineLists = json.loads(localHeadLineListsFile)
 
-  return localHeadLineLists[idx]
+  stringsToReturn = []
+  for x in localHeadLineLists[idx]:
+    stringsToReturn.append(x[0])
+  return stringsToReturn
 
 def generateNYTScores():
-  for i in range(0, 1):
+  yearNumTickers = []
+  with open('TempFiles/yearNumTickers.json') as json_file:
+      yearNumTickersFile = json.load(json_file)
+  yearNumTickers = json.loads(yearNumTickersFile)
+  numTickers = yearNumTickers[1]
+
+  for i in range(0, numTickers):
     cohereSentiment(examples, i)
   exportNYTScores()
