@@ -4,24 +4,20 @@ from GoogleScraper.googlescraper import *
 from GoogleScraper.tickerparser import *
 from StockPicker.configexporter import *
 from StockPicker.portfolioPicker import *
-from NYTScraper.MainNYT import *
-from NYTScraper.cohereTest import *
+from NYTScraper.mainNYT import *
+from NYTScraper.cohereSentiment import *
 
 def main():
-    print("Hello World!")
-    
-
-    generateTickersByYear(2016)
-    generateGoogScore()
-    graph()
-
+    # Should be run in this order: generate tickers, generate search scores, generate article text, generate nytscores, sum score, pick stocks, print portfolio
+    print("running")
+    # generateTickersByYear(2015)
+    # generateSearchScores()
+    # graph()
     # generateArticleText()
+    # generateNYTScores()
     sumScore()
-    #generateNYTScores()
-    #print(config.NYTScores)
     pickStocks()
     printPortfolio()
-    # exportConfig()
 
 if __name__ == "__main__":
     main()

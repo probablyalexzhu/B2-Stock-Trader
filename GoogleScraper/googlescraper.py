@@ -4,52 +4,66 @@
 
 import pandas as pd                        
 from pytrends.request import TrendReq
+from StockPicker.configexporter import *
 import config
 import warnings
 warnings.filterwarnings('ignore')
+import json
 
-def generateGoogScore():
+def generateSearchScores():
+    localTickersFiltered = []
+    with open('TempFiles/tickersFiltered.json') as json_file:
+        localTickersFilteredFile = json.load(json_file)
+    localTickersFiltered = json.loads(localTickersFilteredFile)
+
+    yearNumTickers = []
+    with open('TempFiles/yearNumTickers.json') as json_file:
+        yearNumTickersFile = json.load(json_file)
+    yearNumTickers = json.loads(yearNumTickersFile)
+    year = yearNumTickers[0]
+    numTickers = yearNumTickers[1]
+
     tickersToAnalyzeAverages = [] # temporary list of tickers to analyze
     tickersDoneCounter = 0
 
     # do first 5 tickers in separate case
     for idx in range(5):
-        tickersToAnalyzeAverages.append(config.tickersFiltered[idx]);
+        tickersToAnalyzeAverages.append(localTickersFiltered[idx]);
 
     #historical interest
     pytrends1=TrendReq()
-    historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=config.yearToAnalyze, month_start=12,
-        day_start=1, hour_start=0, year_end=config.yearToAnalyze, month_end=12, day_end=31, hour_end=0, cat=0,
+    historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=year, month_start=12,
+        day_start=1, hour_start=0, year_end=year, month_end=12, day_end=31, hour_end=0, cat=0,
         geo='', gprop='', sleep=0)
 
     print(historicalDataFrame)
     # average them and put them in averageList
     for item in historicalDataFrame:
-        config.googAverageListFinal.append(historicalDataFrame[item].mean().round(3))
+        config.searchScores.append(historicalDataFrame[item].mean().round(3))
         tickersDoneCounter += 1
     tickersDoneCounter -= 1 # The isPartial column
 
     print("Initial tickers done: " + str(tickersDoneCounter))
 
-    normalizingTickerAverage = config.googAverageListFinal[0]
+    normalizingTickerAverage = config.searchScores[0]
     tickersToAnalyzeAverages.clear()
 
     # loop rest of tickers
-    for i in range(5,config.numTickers, 4):
-        tickersToAnalyzeAverages.append(config.tickersFiltered[0]) # previous breakpoint: add ticker used for normalization
+    for i in range(5,numTickers, 4):
+        tickersToAnalyzeAverages.append(localTickersFiltered[0]) # previous breakpoint: add ticker used for normalization
         
-        if(config.numTickers - i < 4):
-            for j in range(1, config.numTickers - i):
-                tickersToAnalyzeAverages.append(config.tickersFiltered[j + tickersDoneCounter - 1])
+        if(numTickers - i < 4):
+            for j in range(1, numTickers - i):
+                tickersToAnalyzeAverages.append(localTickersFiltered[j + tickersDoneCounter - 1])
         else:
             for j in range(1, 5):
-                tickersToAnalyzeAverages.append(config.tickersFiltered[j + tickersDoneCounter - 1])
+                tickersToAnalyzeAverages.append(localTickersFiltered[j + tickersDoneCounter - 1])
 
         print("Tickers to analyze averages: " + str(tickersToAnalyzeAverages))
 
         pytrends1=TrendReq()
-        historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=config.yearToAnalyze, month_start=12,
-            day_start=1, hour_start=0, year_end=config.yearToAnalyze, month_end=12, day_end=1, hour_end=12, cat=0,
+        historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=year, month_start=12,
+            day_start=1, hour_start=0, year_end=year, month_end=12, day_end=1, hour_end=12, cat=0,
             geo='', gprop='', sleep=0)
 
         print(historicalDataFrame)
@@ -77,28 +91,28 @@ def generateGoogScore():
         averagesToBeAdded.pop(0)
         print("Averages to be added: " + str(averagesToBeAdded))
         print("tickers done counter: " + str(tickersDoneCounter))
-        config.googAverageListFinal += averagesToBeAdded
+        config.searchScores += averagesToBeAdded
 
         tickersToAnalyzeAverages.clear()
         # normalizingTickerAverage = config.averageListFinal[i] # optimizable?
 
     # sometimes pytrends fails, returns 0 searches, deal with those cases
     tries = 0
-    while 0 in config.googAverageListFinal and tries < 0: # too high and 429 too many requests
+    while 0 in config.searchScores and tries < 0: # too high and 429 too many requests
 
         tickersToRedo = []
-        for idx, x in enumerate(config.googAverageListFinal):
+        for idx, x in enumerate(config.searchScores):
             if(not x):
-                tickersToRedo.append(config.tickersFiltered[idx])
+                tickersToRedo.append(localTickersFiltered[idx])
         print("TICKERS TO REDO OMEGALUL: " + str(tickersToRedo))
 
         
         while(len(tickersToRedo) > 0):
-            tickersToAnalyzeAverages.append(config.tickersFiltered[0])
+            tickersToAnalyzeAverages.append(localTickersFiltered[0])
             tickersToAnalyzeAverages.append(tickersToRedo[0])
             pytrends1=TrendReq()
-            historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=config.yearToAnalyze, month_start=12,
-                day_start=1, hour_start=0, year_end=config.yearToAnalyze, month_end=12, day_end=31, hour_end=0, cat=0,
+            historicalDataFrame = pytrends1.get_historical_interest(tickersToAnalyzeAverages, year_start=year, month_start=12,
+                day_start=1, hour_start=0, year_end=year, month_end=12, day_end=31, hour_end=0, cat=0,
                 geo='', gprop='', sleep=0)
 
             print(historicalDataFrame)
@@ -107,7 +121,7 @@ def generateGoogScore():
             normalizationFactor=normalizingTickerAverage/float((historicalDataFrame.iloc[:, 0].mean()))
             normalizedVal=normalizationFactor*average
 
-            config.googAverageListFinal[config.tickersFiltered.index(tickersToRedo[0])] = normalizedVal.round(3)
+            config.searchScores[localTickersFiltered.index(tickersToRedo[0])] = normalizedVal.round(3)
 
             tickersToAnalyzeAverages.clear()
             tickersToRedo.pop(0)
@@ -115,8 +129,10 @@ def generateGoogScore():
 
         tries += 1
 
-    print(config.googAverageListFinal)
-    maximum = max(config.googAverageListFinal)
+    print(config.searchScores)
+    maximum = max(config.searchScores)
     print(maximum)
 
-    config.googAverageListFinal[:] = [x / maximum for x in config.googAverageListFinal]
+    config.searchScores[:] = [x / maximum for x in config.searchScores]
+
+    exportSearchScores()

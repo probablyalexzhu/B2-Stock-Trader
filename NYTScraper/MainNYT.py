@@ -7,6 +7,8 @@ import configparser
 import config
 import os
 from openpyxl import load_workbook
+import json
+from StockPicker.configexporter import *
 
 # initiate connection w/ personal API key
 configp = configparser.ConfigParser()
@@ -16,27 +18,37 @@ api_key = configp['NYT']['NYT_key']
 nyt = NYTAPI(api_key, parse_dates=True)
 
 def generateArticleText():
-    df = pd.read_excel(open('GoogleScraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
-    namesFiltered = df["Company"].tolist()
     
-    config.yearToAnalyze = 2016
+    localNamesFiltered = []
+    with open('TempFiles/namesFiltered.json') as json_file:
+        localNamesFilteredFile = json.load(json_file)
+    localNamesFiltered = json.loads(localNamesFilteredFile)
 
-    for i in range(0, len(config.namesFiltered)): # manually shift the indexes to cover all the articles without rate limiting
-        headlineList = getArticles(namesFiltered[i])
+    yearNumTickers = []
+    with open('TempFiles/yearNumTickers.json') as json_file:
+        yearNumTickersFile = json.load(json_file)
+    yearNumTickers = json.loads(yearNumTickersFile)
+    year = yearNumTickers[0]
+    numTickers = yearNumTickers[1]
 
-        with pd.ExcelWriter('ArticleHeadlines.xlsx', mode='a') as writer:
-            headlineList.to_excel(writer, sheet_name=str(i), index=False)
+    for i in range(0, numTickers): # be very patient
+        config.headlineLists.append(getArticles(localNamesFiltered[i], year).values.tolist())
+        # with open("ArticleHeadlines.txt", "w") as text_file:
+        #     text_file.write(str(headlineList))
 
-        print("done")
+        print("done" + str(i))
     nyt.close()
 
-def getArticles(q):
+    # print(config.headlineLists)
+    exportHeadlineLists()
+
+def getArticles(q, year):
     articles = nyt.article_search(
         query = q,
         results = 1,
         dates = {
-            "begin": datetime.datetime(config.yearToAnalyze - 1, 1, 1),
-            "end": datetime.datetime(config.yearToAnalyze, 1, 1)
+            "begin": datetime.datetime(year - 1, 1, 1),
+            "end": datetime.datetime(year, 1, 1)
         },
         options = {
         "sort": "oldest",

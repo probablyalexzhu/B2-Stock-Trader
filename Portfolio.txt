@@ -1,1 +1,0 @@
-['$CHTR: Charter Communications, Inc., 0.615', '$ILMN: Illumina, Inc., 0.535', '$ISRG: Intuitive Surgical Inc., 0.526', '$PCAR: PACCAR Inc., 0.52', '$REGN: Regeneron Pharmaceuticals, 0.5707722205175412', '$SBUX: Starbucks Corp., 0.579']
