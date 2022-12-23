@@ -9,15 +9,15 @@ from NYTScraper.cohereSentiment import *
 
 # Should be run in this order: generate tickers, generate search scores, generate article text, generate nytscores, sum score, pick stocks, print portfolio
 def main():
-    print("running")
-    # generateTickersByYear(2015)
-    # generateSearchScores()
-    # graph()
-    # generateArticleText()
-    # generateNYTScores()
-    # sumScore()
-    # pickStocks()
-    # printPortfolio()
+    # print("running")
+    generateTickersByYear(2016)
+    generateSearchScores()
+    graph()
+    generateArticleText()
+    generateNYTScores()
+    sumScore()
+    pickStocks()
+    printPortfolio()
 
 if __name__ == "__main__":
     main()

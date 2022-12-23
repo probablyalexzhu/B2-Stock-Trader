@@ -45,7 +45,7 @@ def generateArticleText():
 def getArticles(q, year):
     articles = nyt.article_search(
         query = q,
-        results = 1,
+        # results = 1,
         dates = {
             "begin": datetime.datetime(year - 1, 1, 1),
             "end": datetime.datetime(year, 1, 1)

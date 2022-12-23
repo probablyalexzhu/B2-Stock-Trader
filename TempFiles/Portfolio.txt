@@ -1,4 +1,11 @@
-B2 Portfolio for 2015
-$GILD: Gilead Sciences, Inc., 0.73
-$BIIB: Biogen, Inc., 0.64
-$MAT: Mattel, Inc., 0.45
+B2 Portfolio for 2016
+$BIIB: Biogen, Inc., 0.63
+$KLAC: KLA-Tencor Corp., 0.58
+$GILD: Gilead Sciences, Inc., 0.54
+$AMGN: Amgen Inc., 0.47
+$TXN: Texas Instruments, Inc., 0.45
+$ATVI: Activision Blizzard, 0.32
+$JD: JD.com, 0.28
+$NXPI: NXP Semiconductors, 0.23
+$REGN: Regeneron Pharmaceuticals, 0.22
+$EBAY: eBay Inc., 0.21
