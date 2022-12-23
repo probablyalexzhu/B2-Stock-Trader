@@ -6,6 +6,7 @@ tickersFiltered = [] # Tickers in the NYSE from that year's NASDAQ100
 namesFiltered = []
 
 searchScores = []
+headlineLists = []
 NYTScores = []
 
 finalScores = []

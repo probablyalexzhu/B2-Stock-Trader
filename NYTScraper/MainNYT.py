@@ -8,6 +8,7 @@ import config
 import os
 from openpyxl import load_workbook
 import json
+from StockPicker.configexporter import *
 
 # initiate connection w/ personal API key
 configp = configparser.ConfigParser()
@@ -17,34 +18,39 @@ api_key = configp['NYT']['NYT_key']
 nyt = NYTAPI(api_key, parse_dates=True)
 
 def generateArticleText():
-    df = pd.read_excel(open('GoogleScraper/Tickers.xlsx', 'rb'), sheet_name='NYSE')
-    namesFilteredFromSheet = df["Company"].tolist()
     
-    config.yearToAnalyze = 2016
+    localNamesFiltered = []
+    with open('TempFiles/namesFiltered.json') as json_file:
+        localNamesFilteredFile = json.load(json_file)
+    localNamesFiltered = json.loads(localNamesFilteredFile)
 
-    tempHeadlineLists = []
+    yearNumTickers = []
+    with open('TempFiles/yearNumTickers.json') as json_file:
+        yearNumTickersFile = json.load(json_file)
+    yearNumTickers = json.loads(yearNumTickersFile)
+    year = yearNumTickers[0]
+    numTickers = yearNumTickers[1]
 
-    for i in range(0, 5): # manually shift the indexes to cover all the articles without rate limiting len(namesFilteredFromSheet)
-        tempHeadlineLists.append(getArticles(namesFilteredFromSheet[i]).values.tolist())
+    for i in range(0, numTickers): # be very patient
+        config.headlineLists.append(getArticles(localNamesFiltered[i], year).values.tolist())
         # with open("ArticleHeadlines.txt", "w") as text_file:
         #     text_file.write(str(headlineList))
 
         print("done" + str(i))
     nyt.close()
 
-    print(tempHeadlineLists)
+    # print(config.headlineLists)
+    exportHeadlineLists()
 
-    json_list = json.dumps(tempHeadlineLists)
-    with open('headlines.json', 'w', encoding='utf-8') as f:
-        json.dump(json_list, f, ensure_ascii=False, indent=4)
+    
 
-def getArticles(q):
+def getArticles(q, year):
     articles = nyt.article_search(
         query = q,
         results = 1,
         dates = {
-            "begin": datetime.datetime(config.yearToAnalyze - 1, 1, 1),
-            "end": datetime.datetime(config.yearToAnalyze, 1, 1)
+            "begin": datetime.datetime(year - 1, 1, 1),
+            "end": datetime.datetime(year, 1, 1)
         },
         options = {
         "sort": "oldest",

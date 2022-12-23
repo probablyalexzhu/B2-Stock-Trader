@@ -32,6 +32,16 @@ def exportSearchScores():
     with open('TempFiles/searchScores.json', 'w', encoding='utf-8') as f:
         json.dump(json_list, f, ensure_ascii=False, indent=4)
 
+def exportHeadlineLists():
+    json_list = json.dumps(config.headlineLists)
+    with open('TempFiles/headlineLists.json', 'w', encoding='utf-8') as f:
+        json.dump(json_list, f, ensure_ascii=False, indent=4)
+
+def exportNYTScores():
+    json_list = json.dumps(config.NYTScores)
+    with open('TempFiles/NYTScores.json', 'w', encoding='utf-8') as f:
+        json.dump(json_list, f, ensure_ascii=False, indent=4)
+
 def graph():
 
     localTickersFiltered = []

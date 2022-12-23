@@ -1,5 +1,7 @@
+import json
 import cohere
 import configparser
+from StockPicker.configexporter import exportNYTScores
 import config
 from cohere.classify import Example
 import pandas as pd
@@ -54,13 +56,14 @@ def cohereSentiment(examples, idx):
   # loop through these to put these into config.NYTScores
 
 def getInputs(idx):
-  df = pd.read_excel(open('ArticleHeadlines.xlsx', 'rb'), sheet_name=str(idx))
-  articles = df["headline"]
-  list = []
-  for x in articles:
-    list.append(x)
-  return list
+  localHeadLineLists = []
+  with open('TempFiles/headlineLists.json') as json_file:
+    localHeadLineListsFile = json.load(json_file)
+  localHeadLineLists = json.loads(localHeadLineListsFile)
+
+  return localHeadLineLists[idx]
 
 def generateNYTScores():
   for i in range(0, 1):
     cohereSentiment(examples, i)
+  exportNYTScores()
