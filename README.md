@@ -3,7 +3,7 @@
 ## Description
 The B2 stock trader is an application that uses Google Trends and Cohere sentiment analysis on NYT articles to pick a portfolio of stocks. It uses a strategy of finding undervalued (low Google interest) but highly-rated (high NYT sentiment scores) stocks that others neglect looking at, because most people focus on popular but likely overvalued stocks. We were inspired by B2EMO, a groundmech salvage assist droid in Star Wars: Andor that looked through junkyards for valuable scrap. Similarly, we scrape the internet to find undervalued stocks.
 
-We built this project to learn about sourcing and processing data ourselves for the purpose of alternative data trading, not necessarily to maximize profit. However, it was highly successful in choosing profitable portfolios.
+We built this project to learn about sourcing and processing data ourselves for the purpose of alternative data trading, not necessarily to create a portfolio that is not risky and maximizes profit. However, it was highly successful in choosing profitable portfolios.
 
 ![image](https://user-images.githubusercontent.com/87958079/211181253-20e9e643-527a-41b4-890c-106697405032.png)
 
