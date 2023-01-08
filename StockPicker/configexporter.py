@@ -123,7 +123,7 @@ def exportPortfolioResults(tickers):
         idx += 1
 
     output += "\nFinal Portfolio Value: From $100,000 to $" + str("{:.2f}".format(config.portfolioValue))
-    output += "\nPercentage Gain/Loss: " + str("{:.2f}".format(((config.portfolioValue - 10000) / 10000) * 100)) + "%\n"
+    output += "\nPercentage Gain/Loss: " + str("{:.2f}".format(((config.portfolioValue - 10000) / 100000) * 100)) + "%\n"
 
     print(output)
 

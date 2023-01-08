@@ -14,4 +14,4 @@ BIIB: $57399.79
 INTC: $22271.32
 
 Final Portfolio Value: From $100,000 to $1673512.63
-Percentage Gain/Loss: 16635.13%
+Percentage Gain/Loss: 1663.51%
