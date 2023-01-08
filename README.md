@@ -5,7 +5,11 @@ The B2 stock trader is an application that uses Google Trends and Cohere sentime
 
 We built this project to learn about sourcing and processing data ourselves for the purpose of alternative data trading, not necessarily to create a portfolio that is not risky and maximizes profit. However, it was highly successful in choosing profitable portfolios.
 
-![image](https://user-images.githubusercontent.com/87958079/211181253-20e9e643-527a-41b4-890c-106697405032.png)
+| ![image](https://user-images.githubusercontent.com/87958079/211218481-c3b136f9-3788-4bc7-a046-4bbe5a443c8c.png) |
+|:--:| 
+| ![image](https://user-images.githubusercontent.com/87958079/211218228-f35831f5-569a-48e0-bb28-bd4338d0f14e.png) |
+| ![image](https://user-images.githubusercontent.com/87958079/211218549-5efe465e-63db-454d-8b48-c70afbcc5a72.png) |
+| *The B2 portfolios beat the S&P 500 by 1212% and 817% between Jan 1, 2008 and Dec 31, 2022, respectively.* |
 
 Why you used the technologies you used,
 What did you learn?
