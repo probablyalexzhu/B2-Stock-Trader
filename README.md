@@ -13,7 +13,7 @@ What makes your project stand out?
 
 ## How to Install and Run
 
-## How to Use the B2 Stock Trader
+## How to Use
 
 ## Challenges Faced
 
