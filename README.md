@@ -2,6 +2,9 @@
 
 ## Description
 The B2 stock trader is an application that uses Google Trends and Cohere sentiment analysis on NYT articles to pick a portfolio of stocks. It uses an algorithmic strategy of finding undervalued (low Google interest) but highly-rated (high NYT sentiment scores) stocks that others neglect looking at, because most people focus on popular but likely overvalued stocks. We were inspired by B2EMO, a groundmech salvage assist droid in Star Wars: Andor that looked through junkyards for valuable scrap. Similarly, we scrape the internet to find undervalued stocks.
+| ![image](https://user-images.githubusercontent.com/87958079/211220068-eb4f63fa-ffb7-4717-9cdc-553f74f0d3aa.png) |
+|:--:| 
+| *B2 in Star Wars: Andor Season 1.* |
 
 We built this project to learn about sourcing and processing data ourselves for the purpose of alternative data trading, improve our abilities to work with libraries and APIs, and practice using Git and debugging projects; we succeeded at reaching that goal. The goal was not necessarily to create a safe portfolio that maximizes profit which would be useful in the real world. However, B2 was still highly successful in choosing profitable portfolios.
 
@@ -21,12 +24,18 @@ We tested starting from 2008, which is as far back as we could go to find a list
 
 Once a final score that took the NYT and Google scores into account was generated for each stock, a portfolio was generated and backtested using the yfinance API. We tested more on 2010 and 2012, reaching profits of up to 633% and 648%, respectively.
 
-What makes our project stand out is that we did all of it at no cost. Finance is largely gatekept; it costs money to gain access to historical stock data, SEO information, alternative data sources, financial advice, and more. We found creative ways to source the information we needed, such as using the Wayback Machine, albeit sometimes limited by API call limits and volume of available information.
+![image](https://user-images.githubusercontent.com/87958079/211219964-c5ed6a8c-cc23-4506-abbb-fb8be1218c9c.png)
+![image](https://user-images.githubusercontent.com/87958079/211219971-a10a65e2-b03e-4243-8d30-47e5bed39db7.png)
+
+What makes our project special is that we did all of it at no cost. Finance and quant are largely gatekept; it costs money to gain access to historical stock data, SEO information, alternative data sources, financial advice, and more. We found creative ways to source the information we needed, such as using the Wayback Machine, albeit sometimes limited by API call limits and volume of available information.
 
 ## How to Install and Run
+Download the project as a .zip file and extract it onto your computer. Run the main method. You will need to install pytrends, pynytimes, pandas, cohere, configparser, and yfinance using a package installer such as pip. Create your own config.ini file in the NYTScraper folder with your own free API keys for pynytimes and Cohere.
 
 ## How to Use
-You will need to download pytrends, pynytimes, pandas, cohere, configparser, and yfinance. Create your own config.ini file in the NYTScraper folder with your own free API keys for pynytimes and Cohere. Then, run main.py in the main folder, passing in the year you want to analyze in generateTickersByYear(), and making sure all the functions are uncommented. Wait for API calls to finish, and the .json and .txt files should update with the chosen portfolio and results. It is set to parse the last month of the year's Google Trends data, and the full year's NYT articles. You can change these timeframes yourself in the respective files, at the cost of runtime and potentially reaching the API call limits.
+Run main.py in the main folder, passing in the year you want to analyze in generateTickersByYear(), and making sure all the functions are uncommented. Wait for API calls to finish, and the .json and .txt files in the TempFiles folder should update with the chosen portfolio and results. It is set to parse the last month of the year's Google Trends data, and the full year's NYT articles. You can change these timeframes yourself in the respective files, at the cost of runtime and potentially reaching the API call limits.
+
+![image](https://user-images.githubusercontent.com/87958079/211220314-a8b43d26-99cc-4045-bac1-b80860ec39a1.png)
 
 ## Challenges Faced
 
