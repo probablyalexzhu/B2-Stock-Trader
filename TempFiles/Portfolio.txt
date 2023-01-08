@@ -1,11 +1,9 @@
 B2 Portfolio for 2008
-$FISV: Fiserv, Inc., 1.00
-$ATVI: Activision Blizzard, 0.97
-$AMGN: Amgen Inc., 0.85
-$HOLX: Hologic, 0.83
-$TEVA: Teva Pharmaceutical Industries, 0.73
-$VRTX: Vertex Pharmaceuticals, 0.68
-$NVDA: NVIDIA Corp., 0.61
-$CDNS: Cadence Design Systems, 0.59
-$BIIB: Biogen, Inc., 0.59
-$INTC: Intel Corp., 0.57
+$FISV: Fiserv, Inc., 0.53
+$HOLX: Hologic, 0.32
+$TEVA: Teva Pharmaceutical Industries, 0.31
+$ORCL: Oracle Corp., 0.09
+$ADBE: Adobe Systems Inc., 0.07
+$AAPL: Apple Inc., 0.03
+$EBAY: eBay Inc., 0.02
+$MSFT: Microsoft Corp., 0.02

@@ -3,15 +3,13 @@ From January 1, 2009 to December 31, 2022
 Starting with $10,000 invested into each stock: 
 
 FISV: $128730.71
-ATVI: $88573.05
-AMGN: $50173.20
 HOLX: $66013.57
 TEVA: $2538.00
-VRTX: $87809.38
-NVDA: $747622.64
-CDNS: $422380.97
-BIIB: $57399.79
-INTC: $22271.32
+ORCL: $50897.21
+ADBE: $172320.05
+AAPL: $402680.50
+EBAY: $89169.18
+MSFT: $131538.00
 
-Final Portfolio Value: From $100,000 to $1673512.63
-Percentage Gain/Loss: 1663.51%
+Final Portfolio Value: From $100,000 to $1043887.22
+Percentage Gain/Loss: 1033.89%

@@ -12,13 +12,23 @@ def backtest():
     count = 0
     tickersToAnalyzeUnprocessed = []
 
+    # retrieve the year
+    yearNumTickers = []
+    with open('TempFiles/yearNumTickers.json') as json_file:
+        yearNumTickersFile = json.load(json_file)
+    yearNumTickers = json.loads(yearNumTickersFile)
+    year = yearNumTickers[0]
+
     # Using for loop to get lines from portfolio text file
     for line in file1:
         count += 1
         if count > 1:
             tickersToAnalyzeUnprocessed.append(line)
 
-    tickersToAnalyzeProcessed = [i[1:5] for i in tickersToAnalyzeUnprocessed]
+    tickersToAnalyzeProcessed = [i[1:] for i in tickersToAnalyzeUnprocessed]
+    print(tickersToAnalyzeProcessed)
+    tickersToAnalyzeProcessed = [i.partition(":")[0] for i in tickersToAnalyzeProcessed]
+    print(tickersToAnalyzeProcessed)
 
     # retrieve year to analyze from json
     yearNumTickers = []
@@ -28,8 +38,8 @@ def backtest():
     year = yearNumTickers[0]
 
     # set start and end dates
-    buyStart = "2009-01-01"
-    buyEnd =  "2009-01-02"
+    buyStart = str(year+1) + "-01-01"
+    buyEnd =  str(year+1) + "-01-02"
     sellStart = "2022-12-31"
     sellEnd = "2023-01-02"
 

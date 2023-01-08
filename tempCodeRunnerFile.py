@@ -1,6 +1,7 @@
 print("running")
-    # generateTickersByYear(2015)
+    # generateTickersByYear(2010)
     # generateSearchScores()
     # graph()
     # generateArticleText()
     # generateNYTScores()
+    # sumScore()
