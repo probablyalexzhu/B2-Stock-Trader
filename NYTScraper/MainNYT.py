@@ -1,3 +1,5 @@
+# Author: Ryan Shen
+
 # import necessary packages (I installed via command line with: python -m pip install --upgrade pynytimes)
 # pynytimes documentation: https://github.com/michadenheijer/pynytimes#archive-metadata
 from pynytimes import NYTAPI
@@ -36,7 +38,7 @@ def generateArticleText():
         # with open("ArticleHeadlines.txt", "w") as text_file:
         #     text_file.write(str(headlineList))
 
-        print("done" + str(i))
+        print("Done index " + str(i))
     nyt.close()
 
     # print(config.headlineLists)

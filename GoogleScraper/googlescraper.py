@@ -36,7 +36,7 @@ def generateSearchScores():
         day_start=1, hour_start=0, year_end=year, month_end=12, day_end=31, hour_end=0, cat=0,
         geo='', gprop='', sleep=0)
 
-    print(historicalDataFrame)
+    # print(historicalDataFrame)
     # average them and put them in averageList
     for item in historicalDataFrame:
         config.searchScores.append(historicalDataFrame[item].mean().round(3))
@@ -66,18 +66,18 @@ def generateSearchScores():
             day_start=1, hour_start=0, year_end=year, month_end=12, day_end=1, hour_end=12, cat=0,
             geo='', gprop='', sleep=0)
 
-        print(historicalDataFrame)
+        # print(historicalDataFrame)
         # average them and put them in averageList
         averagesToBeAdded = []
         for item in historicalDataFrame:
             averagesToBeAdded.append(historicalDataFrame[item].mean())
         
-        print("normalizingTickerAverage: " + str(normalizingTickerAverage))
-        print("averages to be added: " + str(float(averagesToBeAdded[0])))
+        # print("normalizingTickerAverage: " + str(normalizingTickerAverage))
+        # print("averages to be added: " + str(float(averagesToBeAdded[0])))
 
         normalizationFactor=normalizingTickerAverage/float(averagesToBeAdded[0])
 
-        print("normalizationFactor: " + str(normalizationFactor))
+        # print("normalizationFactor: " + str(normalizationFactor))
 
         for k in range(len(averagesToBeAdded)):
             normalizedVal=normalizationFactor*averagesToBeAdded[k]
@@ -89,8 +89,8 @@ def generateSearchScores():
         tickersDoneCounter -= 2
         averagesToBeAdded.pop(len(averagesToBeAdded) - 1)
         averagesToBeAdded.pop(0)
-        print("Averages to be added: " + str(averagesToBeAdded))
-        print("tickers done counter: " + str(tickersDoneCounter))
+        # print("Averages to be added: " + str(averagesToBeAdded))
+        print("tickers done: " + str(tickersDoneCounter))
         config.searchScores += averagesToBeAdded
 
         tickersToAnalyzeAverages.clear()
@@ -104,10 +104,9 @@ def generateSearchScores():
         for idx, x in enumerate(config.searchScores):
             if(not x):
                 tickersToRedo.append(localTickersFiltered[idx])
-        print("TICKERS TO REDO OMEGALUL: " + str(tickersToRedo))
+        print("Tickers to Try Again: " + str(tickersToRedo))
 
-        
-        while(len(tickersToRedo) > 0):
+        while(len(tickersToRedo) > 1):
             tickersToAnalyzeAverages.append(localTickersFiltered[0])
             tickersToAnalyzeAverages.append(tickersToRedo[0])
             pytrends1=TrendReq()
@@ -115,7 +114,7 @@ def generateSearchScores():
                 day_start=1, hour_start=0, year_end=year, month_end=12, day_end=31, hour_end=0, cat=0,
                 geo='', gprop='', sleep=0)
 
-            print(historicalDataFrame)
+            # print(historicalDataFrame)
             # average them and put them in averageList
             average = historicalDataFrame.iloc[:, 1].mean()
             normalizationFactor=normalizingTickerAverage/float((historicalDataFrame.iloc[:, 0].mean()))
@@ -125,14 +124,12 @@ def generateSearchScores():
 
             tickersToAnalyzeAverages.clear()
             tickersToRedo.pop(0)
-            print("TICKERS TO REDO: " + str(tickersToRedo))
+            print("Tickers to Try Again: " + str(tickersToRedo))
 
         tries += 1
 
-    print(config.searchScores)
+    # print(config.searchScores)
     maximum = max(config.searchScores)
-    print(maximum)
-
+    # print(maximum)
     config.searchScores[:] = [x / maximum for x in config.searchScores]
-
     exportSearchScores()

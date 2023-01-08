@@ -11,3 +11,5 @@ NYTScores = []
 
 finalScores = []
 portfolio = []
+portfolioResult = []
+portfolioValue = 0

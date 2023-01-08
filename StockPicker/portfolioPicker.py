@@ -1,3 +1,5 @@
+# Author: Alex Zhu
+
 import config
 import json
 
