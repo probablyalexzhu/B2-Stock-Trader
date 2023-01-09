@@ -43,8 +43,8 @@ Run main.py in the main folder, passing in the year you want to analyze in gener
 
 ## Credits
 This project was co-created by Ryan Shen and Alex Zhu, with research and use of:
-https://quantpedia.com/six-examples-of-trading-strategies-that-use-alternative-data/
-https://medium.com/swlh/build-an-ai-stock-trading-bot-for-free-4a46bec2a18
-https://web.archive.org/web/20160402172246/http://siblisresearch.com/data/historical-components-nasdaq 
-https://medium.com/analytics-vidhya/compare-more-than-5-keywords-in-google-trends-search-using-pytrends-3462d6b5ad62
-https://www.portfoliovisualizer.com/backtest-portfolio#analysisResults
+*https://quantpedia.com/six-examples-of-trading-strategies-that-use-alternative-data/
+*https://medium.com/swlh/build-an-ai-stock-trading-bot-for-free-4a46bec2a18
+*https://web.archive.org/web/20160402172246/http://siblisresearch.com/data/historical-components-nasdaq 
+*https://medium.com/analytics-vidhya/compare-more-than-5-keywords-in-google-trends-search-using-pytrends-3462d6b5ad62
+*https://www.portfoliovisualizer.com/backtest-portfolio#analysisResults
